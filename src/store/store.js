@@ -226,7 +226,7 @@ const mutations={
 			state.audio.progressPercent=((audioPlay.currentTime/audioPlay.duration)*100).toFixed(1);;
 		},
 		//播放列表
-		audioEnd(state){
+		audioEnd(state,flag){
 			const audioPlay=document.querySelector('#playerBar');
 			clearInterval(ctime);
 			state.changeMusicFlag=true;
@@ -234,12 +234,18 @@ const mutations={
 			if(state.playList.length>0){
 				const music=state.playList.find(music=>music.id==state.musicId);
 				const index=state.playList.indexOf(music);
-				if(index<state.playList.length-1){
-					//按照列表顺序播放
+				if(flag==1&&index<(state.playList.length-1)){
+					//按照列表顺序播放  前进一首
 					const nextMusic=state.playList[index+1];
 					state.musicId=nextMusic.id;
+				}else if(flag== -1&&index>0){
+					//后退一首
+					const nextMusic=state.playList[index-1];
+					state.musicId=nextMusic.id;
+				}else if((flag == -1&&index==0) || (flag==1&&index==(state.playList.length-1)&&audioPlay.currentTime!=audioPlay.duration)){
+					//第一首与最后一首(不是播放结束状态)不进行操作
 				}else{
-					//列表播放到最后一首歌
+					//列表播放到最后一首歌 暂停 不进行列表循环
 					state.playFlag=false;
 					state.musicEndFlag=true;
 					audioPlay.currentTime=0;
@@ -290,10 +296,10 @@ const actions={
 		setDuration({commit}){
 			commit('setDuration');
 		},
-		audioEnd(context){
+		audioEnd(context,flag){
 			//自动播放下一首
-			context.commit('audioEnd');
-			if(context.state.playList.length>0){
+			context.commit('audioEnd',flag);
+			if(!context.state.musicEndFlag){
 				context.commit('getSong',context.state.musicId)
 				context.commit('play',{flag:2});
 			}

@@ -1,14 +1,14 @@
 <template>
 	<div class="playerBox" v-show='showFlag'>
-	    <audio ref="myAudio" :src="audio.location" @ended="audioEnd" id="playerBar" @loadedmetadata='setDuration'>
+	    <audio ref="myAudio" :src="audio.location" @ended="audioEnd(1)" id="playerBar" @loadedmetadata='setDuration'>
 	    	<source :src='audio.location' />
 	    </audio>
 
 	    <div class="controlBarBtn">
-	        <mu-icon-button icon="skip_previous"/>
+	        <mu-icon-button icon="skip_previous" @click='audioEnd(-1)'/>
 	        <mu-icon-button class="addPlus" icon="play_arrow" @click="play" v-show='!playFlag' />
 	        <mu-icon-button class="addPlus" icon="pause" @click="pause" v-show='playFlag'/>
-	        <mu-icon-button icon="skip_next"/>
+	        <mu-icon-button icon="skip_next" @click='audioEnd(1)'/>
 	    </div>
 	</div>
 </template>
@@ -35,8 +35,8 @@
 			pause(){
 				this.$store.commit('pause');
 			},
-			audioEnd(){
-				this.$store.dispatch('audioEnd');
+			audioEnd(flag){
+				this.$store.dispatch('audioEnd',flag);
 			},
 			setDuration(){
 				this.$store.dispatch('setDuration'),

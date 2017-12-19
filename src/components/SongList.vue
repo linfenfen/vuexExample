@@ -28,7 +28,6 @@
 			this.$nextTick(function(){
 				//要用异步的playlist  这样不会导致音乐卡顿
 				if(this.$store.getters.tileId!=this.$route.params.id){
-					this.$store.commit('setListInit');
 					this.$store.dispatch('playList',this.$route.params.id);
 				}
 			})
@@ -41,6 +40,11 @@
 				if(this.$store.getters.musicId!==id){
 					this.$store.commit('setFlag')
 				}
+				//当当前歌单与播放歌单不同时，加载新的歌单
+				if(this.$store.getters.tileId!=this.$store.getters.curListId){
+					this.$store.dispatch('changList');
+				}
+
 				this.$router.push({name:'play',params:{id:id}});
 			}
 		}

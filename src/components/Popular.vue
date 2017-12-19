@@ -35,7 +35,7 @@ import axios from 'axios'
 export default {
    data() {
      return {
-       swiperOption: {
+        swiperOption: {
          centeredSlides: true,
          autoplay: {
            delay: 2500,
@@ -45,7 +45,7 @@ export default {
            el: '.swiper-pagination',
            clickable: true
          }
-       },
+        },
        banners:[],
        list:[],
      }
@@ -62,10 +62,7 @@ export default {
    	initPopular(){
    	      axios.get('/api/banner').then(res=> {
    	             this.banners=res.data.banners;
-   	             this.swiperOption=new Swiper({
-
-   	             })
-   	      }).catch(erro=>{console.log(error)}),
+   	      }).catch(error=>{console.log(error)}),
    	      axios.get('/api/top/playlist/highquality?limit=8').then(res=> {
    	             this.list=res.data.playlists;
    	      })

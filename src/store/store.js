@@ -26,9 +26,14 @@ const state={
 		checkStatus:false,
 
 		//music部分
+		//搜索到的歌单列表
 		playList:[],
-		//歌单id
+		//当前播放的歌单列表
+		curPlayList:[],
+		//搜索歌单id
 		tileId:'',
+		//当前播放歌单id
+		curListId:'',
 		//搜索结果
 		result:[],
 		audio:{
@@ -85,7 +90,9 @@ const getters={
 		//music部分
 		audio:state=>state.audio,
 		playList:state=>state.playList,
+		curPlayList:state=>state.curPlayList,
 		tileId:state=>state.tileId,
+		curListId:state=>state.curListId,
 		result:state=>state.result,
 		songs:state=>state.result.songs,
 		playFlag:state=>state.playFlag,
@@ -132,6 +139,7 @@ const mutations={
 				state.tileId=id;
 				axios.get(url).then(res=>{
 					state.playList=res.data.playlist.tracks;
+					console.log(state.playList);
 				})
 		},
 		//设置初始化的flag标识
@@ -191,8 +199,8 @@ const mutations={
 		//从搜索页面或者单首歌曲入口进入play时，清除playlist
 		//未来可以修改为当前入口进入后添加到播放列表
 		setListInit(state){
-			state.tileId='';
-			state.playList=[];
+			state.curListId='';
+			state.curPlayList=[];
 		},
 		//获取歌词详情
 		getSong(state,id){
@@ -231,16 +239,16 @@ const mutations={
 			clearInterval(ctime);
 			state.changeMusicFlag=true;
 			audioPlay.pause();
-			if(state.playList.length>0){
-				const music=state.playList.find(music=>music.id==state.musicId);
-				const index=state.playList.indexOf(music);
-				if(flag==1&&index<(state.playList.length-1)){
+			if(state.curPlayList.length>0){
+				const music=state.curPlayList.find(music=>music.id==state.musicId);
+				const index=state.curPlayList.indexOf(music);
+				if(flag==1&&index<(state.curPlayList.length-1)){
 					//按照列表顺序播放  前进一首
-					const nextMusic=state.playList[index+1];
+					const nextMusic=state.curPlayList[index+1];
 					state.musicId=nextMusic.id;
 				}else if(flag== -1&&index>0){
 					//后退一首
-					const nextMusic=state.playList[index-1];
+					const nextMusic=state.curPlayList[index-1];
 					state.musicId=nextMusic.id;
 				}else if((flag == -1&&index==0) || (flag==1&&index==(state.playList.length-1)&&audioPlay.currentTime!=audioPlay.duration)){
 					//第一首与最后一首(不是播放结束状态)不进行操作
@@ -263,6 +271,11 @@ const mutations={
 			}
 
 		},
+		//替换当前歌单
+		changList(state){
+			state.curPlayList=state.playList;
+			state.curListId=state.tileId;
+		}
 	}
 const actions={
 		//registration部分
@@ -303,6 +316,9 @@ const actions={
 				context.commit('getSong',context.state.musicId)
 				context.commit('play',{flag:2});
 			}
+		},
+		changList({commit}){
+			commit('changList');
 		}
 	}
 

@@ -11,6 +11,7 @@
 			<img :src='audio.picUrl' />
 			<!--封面cd-->
 			<mu-avatar slot='left' :size='300' :src='audio.picUrl' />
+			<div v-if='None'>当前无播放曲目</div>
 		</div>
 
 		<div class='controlBar'>
@@ -40,11 +41,14 @@ let audioPlay;
 			audio(){
 				return this.$store.getters.audio;
 			},
+			None(){
+				return this.$store.getters.musicId?false:true;
+			}
 		},
 		mounted(){
 			this.$nextTick(function(){
 				//当一曲完结musicEndFlag:true,切换歌曲changMusicFlag：false时 重新获得歌曲
-				if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag){
+				if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag&&this.$store.getters.musicId){
 					this.$store.dispatch('getSong',this.$route.params.id)
 				}
 			})

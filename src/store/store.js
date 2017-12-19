@@ -139,7 +139,6 @@ const mutations={
 				state.tileId=id;
 				axios.get(url).then(res=>{
 					state.playList=res.data.playlist.tracks;
-					console.log(state.playList);
 				})
 		},
 		//设置初始化的flag标识

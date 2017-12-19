@@ -52,7 +52,9 @@ export default{
 		},
 		getSong(id){
 			this.$store.commit('setListInit');
-
+			if(this.$store.getters.musicId!==id){
+				this.$store.commit('setFlag')
+			}
 			this.$router.push({name:'play',params:{id:id}});
 		}
 	},

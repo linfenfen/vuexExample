@@ -137,6 +137,7 @@ const mutations={
 		//设置初始化的flag标识
 		setFlag(state){
 			state.changeMusicFlag=true;
+			state.musicEndFlag=false;
 		},
 		//播放+移动进度条
 		play(state,payload){
@@ -226,8 +227,10 @@ const mutations={
 		},
 		//播放列表
 		audioEnd(state){
+			const audioPlay=document.querySelector('#playerBar');
 			clearInterval(ctime);
 			state.changeMusicFlag=true;
+			audioPlay.pause();
 			if(state.playList.length>0){
 				const music=state.playList.find(music=>music.id==state.musicId);
 				const index=state.playList.indexOf(music);
@@ -237,7 +240,6 @@ const mutations={
 					state.musicId=nextMusic.id;
 				}else{
 					//列表播放到最后一首歌
-					const audioPlay=document.querySelector('#playerBar');
 					state.playFlag=false;
 					state.musicEndFlag=true;
 					audioPlay.currentTime=0;
@@ -284,6 +286,9 @@ const actions={
 		},
 		getSong({commit},payload){
 			commit('getSong',payload);
+		},
+		setDuration({commit}){
+			commit('setDuration');
 		},
 		audioEnd(context){
 			//自动播放下一首

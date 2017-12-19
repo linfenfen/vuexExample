@@ -39,7 +39,7 @@
 				this.$store.dispatch('audioEnd');
 			},
 			setDuration(){
-				this.$store.commit('setDuration'),
+				this.$store.dispatch('setDuration'),
 				this.$store.commit('play',{flag:2})
 			}
 		}

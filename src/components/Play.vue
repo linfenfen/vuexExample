@@ -28,11 +28,6 @@
 <script>
 let audioPlay;
 	export default{
-		data(){
-			return {
-				playFlag:false,
-			}
-		},
 		computed:{
 			progressPercent:{
 				get:function (){
@@ -48,7 +43,10 @@ let audioPlay;
 		},
 		mounted(){
 			this.$nextTick(function(){
-				this.$store.commit('getSong',this.$route.params.id)
+				//当一曲完结musicEndFlag:true,切换歌曲changMusicFlag：false时 重新获得歌曲
+				if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag){
+					this.$store.commit('getSong',this.$route.params.id)
+				}
 			})
 		},
 		methods:{

@@ -26,7 +26,11 @@
 		},
 		mounted(){
 			this.$nextTick(function(){
-				this.$store.commit('playList',this.$route.params.id);
+				//要用异步的playlist  这样不会导致音乐卡顿
+				if(this.$store.getters.tileId!=this.$route.params.id){
+					this.$store.commit('setListInit');
+					this.$store.dispatch('playList',this.$route.params.id);
+				}
 			})
 		},
 		methods:{
@@ -34,7 +38,10 @@
 				this.$router.go(-1)
 			},
 			getSong(id){
-				this.$router.push({name:'play',params:{id:id}})
+				if(this.$store.getters.musicId!==id){
+					this.$store.commit('setFlag')
+				}
+				this.$router.push({name:'play',params:{id:id}});
 			}
 		}
 	}

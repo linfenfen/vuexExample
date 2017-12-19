@@ -36,8 +36,7 @@
 				this.$store.commit('pause');
 			},
 			audioEnd(){
-				this.$store.commit('audioEnd');
-				this.$router.push({name:'play',params:{id:this.$store.getters.musicId}})
+				this.$store.dispatch('audioEnd');
 			},
 			setDuration(){
 				this.$store.commit('setDuration'),

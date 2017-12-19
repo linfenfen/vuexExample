@@ -27,6 +27,8 @@ const state={
 
 		//music部分
 		playList:[],
+		//歌单id
+		tileId:'',
 		//搜索结果
 		result:[],
 		audio:{
@@ -43,7 +45,11 @@ const state={
 		//是否正在播放标志
 		playFlag:'',
 		//当前歌曲id
-		musicId:''
+		musicId:'',
+		//当前列表播放完毕的标签
+		musicEndFlag:false,
+		//是否切换歌曲标签
+		changeMusicFlag:true,
 	}
 const getters={
 		//registration部分
@@ -79,9 +85,12 @@ const getters={
 		//music部分
 		audio:state=>state.audio,
 		playList:state=>state.playList,
+		tileId:state=>state.tileId,
 		result:state=>state.result,
 		songs:state=>state.result.songs,
 		playFlag:state=>state.playFlag,
+		musicEndFlag:state=>state.musicEndFlag,
+		changeMusicFlag:state=>state.changeMusicFlag,
 		musicId:state=>state.musicId,
 		progressPercent:state=>state.audio.progressPercent,
 	}
@@ -119,14 +128,20 @@ const mutations={
 		//music部分
 		//获取歌单详情
 		playList(state,id){
-			const url='/api/playlist/detail?id='+id;
-			axios.get(url).then(res=>{
-				state.playList=res.data.playlist.tracks;
-			})
+				const url='/api/playlist/detail?id='+id;
+				state.tileId=id;
+				axios.get(url).then(res=>{
+					state.playList=res.data.playlist.tracks;
+				})
+		},
+		//设置初始化的flag标识
+		setFlag(state){
+			state.changeMusicFlag=true;
 		},
 		//播放+移动进度条
 		play(state,payload){
 			clearInterval(ctime);
+			state.musicEndFlag=false;
 			const totalTime=state.audio.duration;
 			const audioPlay=document.querySelector('#playerBar');
 			let curTime;
@@ -155,12 +170,6 @@ const mutations={
 
 				state.audio.currentTime=curTime;
 				state.audio.progressPercent=process;
-				// if(curTime>totalTime){
-				// 	state.audio.currentTime=0;
-				// 	state.audio.progressPercent=0;
-
-				// 	clearInterval(ctime);
-				// }
 			},1000);
 
 		},
@@ -178,6 +187,12 @@ const mutations={
 				state.result=res.data.result;
 			})
 		},
+		//从搜索页面或者单首歌曲入口进入play时，清除playlist
+		//未来可以修改为当前入口进入后添加到播放列表
+		setListInit(state){
+			state.tileId='';
+			state.playList=[];
+		},
 		//获取歌词详情
 		getSong(state,id){
 			const url='/api/song/detail?ids='+id;
@@ -186,6 +201,8 @@ const mutations={
 			state.musicId=id;
 			clearInterval(ctime);
 			state.playFlag=false;
+			state.musicEndFlag=false;
+			state.changeMusicFlag=false;
 			state.audio.currentTime='0';
 
 			axios.get(locationUrl).then((res)=>{
@@ -209,12 +226,34 @@ const mutations={
 		},
 		//播放列表
 		audioEnd(state){
-			const music=state.playList.find(music=>music.id==state.musicId);
-			const index=state.playList.indexOf(music)+1;
-			console.log(index);
-			const nextMusic=state.playList[index];
 			clearInterval(ctime);
-			state.musicId=nextMusic.id;
+			state.changeMusicFlag=true;
+			if(state.playList.length>0){
+				const music=state.playList.find(music=>music.id==state.musicId);
+				const index=state.playList.indexOf(music);
+				if(index<state.playList.length-1){
+					//按照列表顺序播放
+					const nextMusic=state.playList[index+1];
+					state.musicId=nextMusic.id;
+				}else{
+					//列表播放到最后一首歌
+					const audioPlay=document.querySelector('#playerBar');
+					state.playFlag=false;
+					state.musicEndFlag=true;
+					audioPlay.currentTime=0;
+					state.audio.currentTime=0;
+					state.audio.progressPercent=0;
+				}
+			}else{
+				//无列表，只有当前一首歌
+				const audioPlay=document.querySelector('#playerBar');
+				state.playFlag=false;
+				state.musicEndFlag=true;
+				audioPlay.currentTime=0;
+				state.audio.currentTime=0;
+				state.audio.progressPercent=0;
+			}
+
 		},
 	}
 const actions={
@@ -236,9 +275,24 @@ const actions={
 
 
 		//music部分
-		play({commit},playload){
-			commit('play',playload);
+		//移动滚动条时候使用
+		play({commit},payload){
+			commit('play',payload)
 		},
+		playList({commit},id){
+			commit('playList',id);
+		},
+		getSong({commit},payload){
+			commit('getSong',payload);
+		},
+		audioEnd(context){
+			//自动播放下一首
+			context.commit('audioEnd');
+			if(context.state.playList.length>0){
+				context.commit('getSong',context.state.musicId)
+				context.commit('play',{flag:2});
+			}
+		}
 	}
 
 export const store=new Vuex.Store({

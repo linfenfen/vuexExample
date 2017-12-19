@@ -51,7 +51,16 @@ export default{
 			}
 		},
 		getSong(id){
-			this.$router.push({name:'play',params:{id:id}})
+			this.$store.commit('setListInit');
+			// if(this.$store.getters.musicId!==id){
+			// 	this.$store.commit('setFlag')
+			// }
+			// //当一曲完结musicEndFlag:true,切换歌曲changMusicFlag：false时 重新获得歌曲
+			// if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag){
+			// 	this.$store.commit('getSong',id)
+			// }
+
+			this.$router.push({name:'play',params:{id:id}});
 		}
 	}
 }

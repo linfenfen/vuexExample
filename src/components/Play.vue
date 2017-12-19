@@ -48,7 +48,7 @@ let audioPlay;
 		mounted(){
 			this.$nextTick(function(){
 				//当一曲完结musicEndFlag:true,切换歌曲changMusicFlag：false时 重新获得歌曲
-				if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag&&this.$store.getters.musicId){
+				if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag){
 					this.$store.dispatch('getSong',this.$route.params.id)
 				}
 			})

@@ -1,6 +1,6 @@
 <template>
 	<div class="playerBox" v-show='showFlag'>
-	    <audio ref="myAudio" :src="audio.location" @ended="audioEnd(1)" id="playerBar" @loadedmetadata='setDuration'>
+	    <audio ref="myAudio" :src="audio.location" @ended="audioEnd(1)" id="playerBar" @loadedmetadata='setDuration' @timeupdate='changlrc'>
 	    	<source :src='audio.location' />
 	    </audio>
 
@@ -41,6 +41,15 @@
 			setDuration(){
 				this.$store.dispatch('setDuration'),
 				this.$store.commit('play',{flag:2})
+			},
+			changlrc(){
+				const lrcObj=this.$store.getters.lrcObj;
+				const audio=document.querySelector('#playerBar');
+				//1是调节的变量， 可用于控制  歌词加快或者减慢
+				const curTime=Math.round(audio.currentTime)-1;
+				if(lrcObj['T'+curTime]&&lrcObj['T'+curTime].text!=this.$store.getters.lrcText){
+					this.$store.commit('changelrc',lrcObj['T'+curTime].text);
+				}
 			}
 		}
 	}

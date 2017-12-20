@@ -9,7 +9,7 @@
 		<mu-card>
 		   <!-- swiper -->
 		    <swiper :options="swiperOption">
-		       <swiper-slide v-for='(item,index) in banners'>
+		       <swiper-slide v-for='(item,index) in banners' :key='index'>
 		       	<mu-card-media>
 		       	<img :src='item.pic' />
 		       </mu-card-media>

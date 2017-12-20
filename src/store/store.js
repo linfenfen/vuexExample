@@ -55,6 +55,15 @@ const state={
 		musicEndFlag:false,
 		//是否切换歌曲标签
 		changeMusicFlag:true,
+
+		//存放歌词
+		//测试id
+		idd:32719128,
+		lrc:"[by:Aria-Sul-G]\n[00:12]I met this boy in Molly town\n[00:15]He said a boom, a boom, boom, boom\n[00:18]He said he'd like to buy my round\n[00:21]I said OK, but you can't buy me baby\n[00:24]You look just like my favourite sound\n[00:27]So I stay alalala\n[00:30]Asking if I was allowed to come and play\n[00:33]The rest is history\n[00:35]What is a girl like me to do-u-u\n[00:39]Not for a second I can leave you-u-u\n[00:42]Been here a month and I know your smile-u-u\n[00:46]My heart is thinking I'll stay a while-u-u-u-u\n[00:51]The weeks went on and the months fell out\n[00:54]Of my way, what can I sing about it\n[00:57]You swore you'd always be around\n[01:00]If I stay, so I'm staying\n[01:03]I hold my plans to the god of fate\n[01:05]And all he say was boom, boom, boom\n[01:08]You're the point to the love I found\n[01:11]In a way, don't think I'm crazy\n[01:14]What is a girl like me to do-u-u\n[01:17]Not for a second I can leave you-u-u\n[01:21]Been here a month and I know your smile-u-u\n[01:24]My heart is thinking I'll stay a while-u-u-u-u, whoa\n[01:30]O-e-o, o-e-o, o-e-o-o-o-o\n[01:36]O-e-o, o-e-o, o-e-o-o-o-o\n[01:41]O-e-o, o-e-o, o-e-o-o-o-o\n[01:47]O-e-o, o-e-o, o-e-o-o-o-o\n[01:52]Got my camera, got my six\n[01:55]Anymore I'm leaving him\n[01:58]Run from life as I know it\n[02:01]Cause you got me, got me, got me transfixed\n[02:04]Thought I'd travel far away\n[02:07]But you call me half the way\n[02:09]Down in moyo I would stay\n[02:12]Cause you got me, got me, got me good babe\n[02:15]What is a girl like me to do-u-u\n[02:19]Not for a second I can leave you-u-u\n[02:22]Been here a month and I know your smile-u-u\n[02:26]My heart is thinking I'll stay a while-u-u-u-u, whoa\n[02:42]I'll never let you go\n[02:45]Boy, you're my comfort child\n[02:48]I'll never let you go\n[02:50]No, no, ooh\n[02:53]I see our love's been on lock and there's no talk if I stop it\n[02:57]You just don't want to see me go\n[02:59]Every look I've been clocking, on your door I've been knocking\n[03:02]Get your life and baby let's go, go\n[03:05]I met this boy in Molly town\n[03:08]He said a boom, a boom, boom, boom\n[03:11]He said he'd like to buy my round\n[03:13]I said OK, a boom, boom, boom\n",
+		//歌词对象 存储对应时间对应margin、text、index
+		lrcObj:[],
+		//当前歌词
+		lrcText:'',
 	}
 const getters={
 		//registration部分
@@ -100,6 +109,9 @@ const getters={
 		changeMusicFlag:state=>state.changeMusicFlag,
 		musicId:state=>state.musicId,
 		progressPercent:state=>state.audio.progressPercent,
+		lrc:state=>state.lrc,
+		lrcObj:state=>state.lrcObj,
+		lrcText:state=>state.lrcText,
 	}
 const mutations={
 		//registration部分
@@ -274,6 +286,41 @@ const mutations={
 		changList(state){
 			state.curPlayList=state.playList;
 			state.curListId=state.tileId;
+		},
+		//获取歌词详情，与getSong同时使用
+		getlrc(state,id){
+			const url='/api/lyric?id='+id;
+			axios.get(url).then((res)=>{
+				console.log(res);
+				state.lrc=res.data.lrc;
+			}).catch(erro=>{console.log(erro)})
+		},
+		//处理歌词
+		initlrc(state){
+			const Reg=/\[(\d*):(\d*)\]/;
+			let lrcArr=state.lrc.split('\n');
+			let lrc;
+			let tempTime;
+			state.lrcObj['T'+0]={
+				index:0,
+				text:'歌词 '+lrcArr[0].slice(1,lrcArr[0].length-1),
+				top:0,
+			}
+			for(let i=1,len=lrcArr.length-1;i<len;i++){
+				let everylrc=lrcArr[i].split(']');
+				let text=everylrc[1];
+				let time=everylrc[0].slice(1).split(':');
+				let tempTime=parseInt(time[0])*60+parseInt(time[1]);
+				state.lrcObj['T'+tempTime]={
+					index:i,
+					text:text,
+					top:i*47
+				}
+			}
+		},
+		//改变当前歌词
+		changelrc(state,text){
+			state.lrcText=text;
 		}
 	}
 const actions={
@@ -304,6 +351,8 @@ const actions={
 		},
 		getSong({commit},payload){
 			commit('getSong',payload);
+			// commit('getlrc',payload);
+			commit('initlrc');
 		},
 		setDuration({commit}){
 			commit('setDuration');

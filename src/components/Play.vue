@@ -14,6 +14,11 @@
 			<div v-if='None'>当前无播放曲目</div>
 		</div>
 
+		<!--歌词-->
+		<div class='lrc'>
+			{{lrc}}
+		</div>
+
 		<div class='controlBar'>
 			<mu-content-block>
 			    {{audio.songName}} - {{audio.singer}}
@@ -43,6 +48,9 @@ let audioPlay;
 			},
 			None(){
 				return this.$store.getters.musicId?false:true;
+			},
+			lrc(){
+				return this.$store.getters.lrcText;
 			}
 		},
 		mounted(){

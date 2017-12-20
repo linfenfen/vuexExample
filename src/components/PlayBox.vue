@@ -48,7 +48,7 @@
 				//1是调节的变量， 可用于控制  歌词加快或者减慢
 				const curTime=Math.round(audio.currentTime)-1;
 				if(lrcObj['T'+curTime]&&lrcObj['T'+curTime].text!=this.$store.getters.lrcText){
-					this.$store.commit('changelrc',lrcObj['T'+curTime].text);
+					this.$store.state.marginTop=lrcObj['T'+curTime].top;
 				}
 			}
 		}

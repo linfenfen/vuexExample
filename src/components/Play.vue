@@ -15,8 +15,8 @@
 		</div>
 
 		<!--歌词-->
-		<div class='lrc'>
-			{{lrc}}
+		<div class='lrc' v-if='showlrc'>
+			<ul id='lrc' v-html='lrc'></ul>
 		</div>
 
 		<div class='controlBar'>
@@ -50,11 +50,29 @@ let audioPlay;
 				return this.$store.getters.musicId?false:true;
 			},
 			lrc(){
-				return this.$store.getters.lrcText;
+				return this.$store.getters.lrcStr;
+			},
+			showlrc(){
+				return this.$route.params.id == 32719128
+			},
+			marginTop(){
+				return this.$store.getters.marginTop;
 			}
 		},
 		mounted(){
 			this.$nextTick(function(){
+				//重新进入页面时定位当前句的歌词
+				const lrc=document.querySelector('#lrc');
+
+				
+				// lrc.style.marginTop=-this.marginTop+'px';
+				//注意 这里是“translateY(-” + 变量 + “px）” 组成的字符串
+				lrc.style.transform="translateY(-"+this.marginTop+"px)";
+				lrc.style.WebkitTansform="translateY(-"+this.marginTop+"px)";
+				
+				//lrc.style.transition='margin .5s';
+				lrc.style.transition='transform .5s';
+
 				//当一曲完结musicEndFlag:true,切换歌曲changMusicFlag：false时 重新获得歌曲
 				if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag){
 					this.$store.dispatch('getSong',this.$route.params.id)
@@ -84,6 +102,13 @@ let audioPlay;
 		watch: {
 	    	'$route' (to, from) {
 	      		this.$store.commit('getSong',this.$route.params.id);
+	    	},
+	    	marginTop(){
+	    		const lrc=document.querySelector('#lrc');
+	    		// lrc.style.marginTop=-this.marginTop+'px';
+	    		//注意 这里是“translateY(-” + 变量 + “px）” 组成的字符串
+	    		lrc.style.transform="translateY(-"+this.marginTop+"px)";
+	    		lrc.style.WebkitTansform="translateY(-"+this.marginTop+"px)";
 	    	}
   		},
 	}
@@ -122,6 +147,20 @@ let audioPlay;
 	.mu-slider{
 		margin:0 10px;
 	}
+
+	.lrc{
+		height:30px;
+		line-height:30px;
+		overflow: hidden;
+	}
+	ul{
+		list-style-type: none;
+		padding-left:0;
+	}
+	#lrc{
+		margin-top:0;
+	}
+
 	@media screen and (max-width:414px) {
 		.mu-avatar{
 			width:220px!important;

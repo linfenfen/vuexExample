@@ -51,10 +51,9 @@
 				const lrcObj=this.$store.getters.lrcObj;
 				const audio=document.querySelector('#playerBar');
 				//0.5是调节的变量， 可用于控制  歌词加快或者减慢
-				const curTime=Math.round(audio.currentTime-0.5);
-				if(lrcObj['T'+curTime]&&lrcObj['T'+curTime].text!=this.$store.getters.lrcText){
-					this.$store.state.lrcText=lrcObj['T'+curTime].text;
-					this.$store.state.marginTop=lrcObj['T'+curTime].top;
+				const curTime=Math.round(audio.currentTime-0.49);
+				if(lrcObj[curTime]){
+					this.$store.state.marginTop=lrcObj[curTime].top;
 				}
 			}
 		}

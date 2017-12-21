@@ -66,12 +66,12 @@ const state={
 		lrcObj:[],
 		//全部歌词存储
 		lrcStr:'',
-		//当前句歌词
-		lrcText:'',
 		//存储歌词偏移量
 		marginTop:'',
 		//成功获取歌词flag
 		suclrc:false,
+		//歌词作者
+		authorlrc:'',
 	}
 const getters={
 		//registration部分
@@ -118,11 +118,11 @@ const getters={
 		musicId:state=>state.musicId,
 		progressPercent:state=>state.audio.progressPercent,
 		lrc:state=>state.lrc,
-		lrcText:state=>state.lrcText,
 		lrcObj:state=>state.lrcObj,
 		lrcStr:state=>state.lrcStr,
 		marginTop:state=>state.marginTop,
 		suclrc:state=>state.suclrc,
+		authorlrc:state=>state.authorlrc,
 	}
 const mutations={
 		//registration部分
@@ -256,7 +256,7 @@ const mutations={
 			state.audio.currentTime=audioPlay.currentTime;
 			state.audio.progressPercent=((audioPlay.currentTime/audioPlay.duration)*100).toFixed(1);;
 		},
-		//播放列表
+		//播放列表   flag：1前进 ；flag:-1 后退；
 		audioEnd(state,flag){
 			const audioPlay=document.querySelector('#playerBar');
 			clearInterval(ctime);
@@ -336,8 +336,10 @@ const mutations={
 			state.lrcObj={};
 			state.lrcStr='';
 			state.marginTop=0;
-			state.lrcText='';
+			state.authorlrc='';
 
+			//用于多组时间一起时 保存当前的index
+			let index=-1;
 			for(let i=0,len=lrcArr.length-1;i<len;i++){
 				let everylrc=lrcArr[i].split(']');
 				let text;
@@ -345,19 +347,25 @@ const mutations={
 				if(everylrc[0].match(/^\[\d+/)){
 					//拥有时间戳的词
 					text=everylrc[1];
+					//处理时间多组的歌曲编码方式
+					while(text==''){
+						i++;
+						let everylrc=lrcArr[i].split(']');
+						text=everylrc[1];
+					}
+					index++;
 					let time=everylrc[0].slice(1).split(':');
 					tempTime=Math.round(parseFloat(time[0])*60+parseFloat(time[1]));
+					state.lrcObj[tempTime]={
+						index:index,
+						text:text,
+						top:index*30
+					}
+					state.lrcStr+='<li>'+text+'</li>';
 				}else{
-					//非时间戳的词
-					tempTime=i;
-					text=everylrc[0].slice(1);
+					index++;
+					state.authorlrc+='<li>'+everylrc[0].slice(1)+'</li>';
 				}
-				state.lrcObj['T'+tempTime]={
-					index:i,
-					text:text,
-					top:i*30
-				}
-				state.lrcStr+='<li>'+text+'</li>';
 			}
 		},
 	}

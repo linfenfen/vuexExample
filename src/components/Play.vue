@@ -16,7 +16,7 @@
 
 		<!--歌词-->
 		<div class='lrc'>
-			<ul id='lrc' v-html='lrc'></ul>
+			<ul id='lrc' v-html='authorlrc+lrc'></ul>
 		</div>
 
 		<div class='controlBar'>
@@ -48,6 +48,9 @@ let audioPlay;
 			},
 			None(){
 				return this.$store.getters.musicId?true:false;
+			},
+			authorlrc(){
+				return this.$store.getters.authorlrc;
 			},
 			lrc(){
 				return this.$store.getters.lrcStr;
@@ -170,6 +173,7 @@ let audioPlay;
 		/*transition:margin .5s*/
 		transition:transform .8s ease-in-out;
 		margin-top:0;
+		color:red;
 	}
 
 	@media screen and (max-width:414px) {

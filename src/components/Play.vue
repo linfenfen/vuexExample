@@ -11,7 +11,7 @@
 			<img :src='audio.picUrl' />
 			<!--封面cd-->
 			<mu-avatar slot='left' :size='300' :src='audio.picUrl' />
-			<div v-if='None'>当前无播放曲目</div>
+			<div v-if='!None'>当前无播放曲目</div>
 		</div>
 
 		<!--歌词-->
@@ -47,7 +47,7 @@ let audioPlay;
 				return this.$store.getters.audio;
 			},
 			None(){
-				return this.$store.getters.musicId?false:true;
+				return this.$store.getters.musicId?true:false;
 			},
 			lrc(){
 				return this.$store.getters.lrcStr;
@@ -63,16 +63,18 @@ let audioPlay;
 			this.$nextTick(function(){
 				//重新进入页面时定位当前句的歌词
 				const lrc=document.querySelector('#lrc');
+/*
+	明天测试，是否不再出现快速滚动现象
+*/
+				if(this.None&&this.showlrc){
+					lrc.style.opacity=0;
+					// lrc.style.marginTop=-this.marginTop+'px';
+					//注意 这里是“translateY(-” + 变量 + “px）” 组成的字符串
+					lrc.style.transform="translateY(-"+this.marginTop+"px)";
+					lrc.style.WebkitTansform="translateY(-"+this.marginTop+"px)";
+					lrc.style.opacity=1;
 
-				
-				// lrc.style.marginTop=-this.marginTop+'px';
-				//注意 这里是“translateY(-” + 变量 + “px）” 组成的字符串
-				lrc.style.transform="translateY(-"+this.marginTop+"px)";
-				lrc.style.WebkitTansform="translateY(-"+this.marginTop+"px)";
-				
-				//lrc.style.transition='margin .5s';
-				lrc.style.transition='transform .5s';
-
+				}
 				//当一曲完结musicEndFlag:true,切换歌曲changMusicFlag：false时 重新获得歌曲
 				if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag){
 					this.$store.dispatch('getSong',this.$route.params.id)
@@ -158,6 +160,8 @@ let audioPlay;
 		padding-left:0;
 	}
 	#lrc{
+		/*transition:margin .5s*/
+		transition:transform .5s;
 		margin-top:0;
 	}
 

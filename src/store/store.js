@@ -324,9 +324,7 @@ const mutations={
 			axios.get(url).then((res)=>{
 				state.lrc=res.data.lrc.lyric;
 				state.suclrc=true;
-				console.log(1);
 			}).catch(erro=>{console.log("获取歌词出错"+erro)})
-			console.log(3)
 		},
 		//处理歌词,与getSong同时使用
 		initlrc(state){
@@ -340,18 +338,20 @@ const mutations={
 			state.marginTop=0;
 			state.lrcText='';
 
-			state.lrcObj['T'+0]={
-				index:0,
-				text:'歌词 '+lrcArr[0].slice(1,lrcArr[0].length-1),
-				top:0,
-			}
-			console.log(2);
-			state.lrcStr+='<li>歌词 '+lrcArr[0].slice(1,lrcArr[0].length-1)+'</li>';
-			for(let i=1,len=lrcArr.length-1;i<len;i++){
+			for(let i=0,len=lrcArr.length-1;i<len;i++){
 				let everylrc=lrcArr[i].split(']');
-				let text=everylrc[1];
-				let time=everylrc[0].slice(1).split(':');
-				let tempTime=Math.round(parseFloat(time[0])*60+parseFloat(time[1]));
+				let text;
+				let tempTime;
+				if(everylrc[0].match(/^\[\d+/)){
+					//拥有时间戳的词
+					text=everylrc[1];
+					let time=everylrc[0].slice(1).split(':');
+					tempTime=Math.round(parseFloat(time[0])*60+parseFloat(time[1]));
+				}else{
+					//非时间戳的词
+					tempTime=i;
+					text=everylrc[0].slice(1);
+				}
 				state.lrcObj['T'+tempTime]={
 					index:i,
 					text:text,

@@ -15,7 +15,7 @@
 		</div>
 
 		<!--歌词-->
-		<div class='lrc' v-if='showlrc'>
+		<div class='lrc'>
 			<ul id='lrc' v-html='lrc'></ul>
 		</div>
 
@@ -53,7 +53,7 @@ let audioPlay;
 				return this.$store.getters.lrcStr;
 			},
 			showlrc(){
-				return this.$route.params.id == 31745165
+				return this.$store.getters.suclrc;
 			},
 			marginTop(){
 				return this.$store.getters.marginTop;
@@ -69,7 +69,7 @@ let audioPlay;
 
 				//重新进入页面时定位当前句的歌词
 				const lrc=document.querySelector('#lrc');
-				if(this.None&&this.showlrc){
+				if(this.None){
 					lrc.style.opacity=0;
 					// lrc.style.marginTop=-this.marginTop+'px';
 					//注意 这里是“translateY(-” + 变量 + “px）” 组成的字符串
@@ -102,17 +102,22 @@ let audioPlay;
 		},
 		watch: {
 	    	'$route' (to, from) {
-	      		this.$store.commit('getSong',this.$route.params.id);
+	      		this.$store.dispatch('getSong',this.$route.params.id);
 	      		
 	    	},
 	    	marginTop(){
 	    		const lrc=document.querySelector('#lrc');
-	    		if(this.None&&this.showlrc){
+	    		if(this.None){
 		    		// lrc.style.marginTop=-this.marginTop+'px';
 		    		//注意 这里是“translateY(-” + 变量 + “px）” 组成的字符串
 		    		lrc.style.transform="translateY(-"+this.marginTop+"px)";
 		    		lrc.style.WebkitTansform="translateY(-"+this.marginTop+"px)";
 		    	}
+	    	},
+	    	showlrc(){
+	    		if(this.showlrc){
+	    			this.$store.commit('initlrc');
+	    		}
 	    	}
   		},
 	}

@@ -59,7 +59,8 @@ const state={
 		//存放歌词
 		//测试id
 		idd:32719128,
-		lrc:"[by:RedClayBean]\n[00:05.59]I found your hairband on my bedroom floor\n[00:08.72]The only evidence that you've been here before\n[00:12.37]And I don't get waves of missing you anymore\n[00:15.37]They're more like tsunami tides in my eyes\n[00:17.81]Never getting dry, so I get high\n[00:19.75]Smoke in the day then I sleep with the light on\n[00:21.81]Weeks pass in the blink of an eye\n[00:23.19]And I'm still drunk by the end of the night\n[00:24.75]I don't drink like everybody else\n[00:26.00]End up forgetting things about myself\n[00:27.12]I'm stubborn I'm forward head's just blocked\n[00:29.37]My head's still with you but my heart's just not\n[00:31.62]So am I close to you anymore, if it's over\n[00:37.87]And there's no chance that we'll work it out\n[00:43.21]You and I ended over U.N.I.\n[00:46.09]And I said that's fine\n[00:52.52]But you're the only one that knows I lied\n[00:56.84]You and I ended over U.N.I.\n[01:02.71]And I said that's fine\n[01:05.33]But you're the only one that knows I lied\n[01:11.58]Everybody said that we'll be together forever but I know that\n[01:13.71]I never wanna settle down, come around\n[01:14.96]break up the love like lego now\n[01:16.27]Never wanna turn into another like you\n[01:17.65]Sleep with my thoughts dance with my views\n[01:19.33]Everything's great but everything's short\n[01:20.71]But you live in your halls and I live in a tour bus,\n[01:23.02]Now I'm in position to be another stalker\n[01:24.33]And every thing I say seems to always sound awkward\n[01:26.14]Like our last kiss it was perfect, we were nervous, on the surface\n[01:29.08]And I'm always saying everyday that it was worth it\n[01:30.90]Pain is only relevant if it still hurts\n[01:32.27]I forget like an elephant, or we can use a sedative\n[01:33.71]And go back to the day we fell in love on first kiss\n[01:36.21]So am I close to you anymore, now it's over\n[01:42.44]And there's no chance that we'll work it out\n[01:47.38]You and I ended over U.N.I.\n[01:54.00]And I said that's fine\n[01:56.94]But you're the only one that knows I lied\n[02:00.57]You and I ended over U.N.I.\n[02:06.88]And I said that's fine\n[02:09.63]But you're the only one that knows I lied\n[02:26.69]Because, if I was gonna go somewhere, I'd be there by now\n[02:34.07]And maybe I can let myself down, oh\n[02:40.69]And thinking I am unaware, I keep my feet on the ground\n[02:46.01]And keep looking around\n[02:51.82]Because if you want\n[02:55.88]I'll take you in my arms and keep you sheltered\n[03:02.25]From all that I've done wrong\n[03:04.57]And I know you'll say that I'm the only one\n[03:10.94]But I know God made another one of me\n[03:15.00]To love you better than I ever will\n",
+		lrc:'',
+		// lrc:"[by:RedClayBean]\n[00:05.59]I found your hairband on my bedroom floor\n[00:08.72]The only evidence that you've been here before\n[00:12.37]And I don't get waves of missing you anymore\n[00:15.37]They're more like tsunami tides in my eyes\n[00:17.81]Never getting dry, so I get high\n[00:19.75]Smoke in the day then I sleep with the light on\n[00:21.81]Weeks pass in the blink of an eye\n[00:23.19]And I'm still drunk by the end of the night\n[00:24.75]I don't drink like everybody else\n[00:26.00]End up forgetting things about myself\n[00:27.12]I'm stubborn I'm forward head's just blocked\n[00:29.37]My head's still with you but my heart's just not\n[00:31.62]So am I close to you anymore, if it's over\n[00:37.87]And there's no chance that we'll work it out\n[00:43.21]You and I ended over U.N.I.\n[00:46.09]And I said that's fine\n[00:52.52]But you're the only one that knows I lied\n[00:56.84]You and I ended over U.N.I.\n[01:02.71]And I said that's fine\n[01:05.33]But you're the only one that knows I lied\n[01:11.58]Everybody said that we'll be together forever but I know that\n[01:13.71]I never wanna settle down, come around\n[01:14.96]break up the love like lego now\n[01:16.27]Never wanna turn into another like you\n[01:17.65]Sleep with my thoughts dance with my views\n[01:19.33]Everything's great but everything's short\n[01:20.71]But you live in your halls and I live in a tour bus,\n[01:23.02]Now I'm in position to be another stalker\n[01:24.33]And every thing I say seems to always sound awkward\n[01:26.14]Like our last kiss it was perfect, we were nervous, on the surface\n[01:29.08]And I'm always saying everyday that it was worth it\n[01:30.90]Pain is only relevant if it still hurts\n[01:32.27]I forget like an elephant, or we can use a sedative\n[01:33.71]And go back to the day we fell in love on first kiss\n[01:36.21]So am I close to you anymore, now it's over\n[01:42.44]And there's no chance that we'll work it out\n[01:47.38]You and I ended over U.N.I.\n[01:54.00]And I said that's fine\n[01:56.94]But you're the only one that knows I lied\n[02:00.57]You and I ended over U.N.I.\n[02:06.88]And I said that's fine\n[02:09.63]But you're the only one that knows I lied\n[02:26.69]Because, if I was gonna go somewhere, I'd be there by now\n[02:34.07]And maybe I can let myself down, oh\n[02:40.69]And thinking I am unaware, I keep my feet on the ground\n[02:46.01]And keep looking around\n[02:51.82]Because if you want\n[02:55.88]I'll take you in my arms and keep you sheltered\n[03:02.25]From all that I've done wrong\n[03:04.57]And I know you'll say that I'm the only one\n[03:10.94]But I know God made another one of me\n[03:15.00]To love you better than I ever will\n",
 		// lrc:"[by:Aria-Sul-G]\n[00:12]I met this boy in Molly town\n[00:15]He said a boom, a boom, boom, boom\n[00:18]He said he'd like to buy my round\n[00:21]I said OK, but you can't buy me baby\n[00:24]You look just like my favourite sound\n[00:27]So I stay alalala\n[00:30]Asking if I was allowed to come and play\n[00:33]The rest is history\n[00:35]What is a girl like me to do-u-u\n[00:39]Not for a second I can leave you-u-u\n[00:42]Been here a month and I know your smile-u-u\n[00:46]My heart is thinking I'll stay a while-u-u-u-u\n[00:51]The weeks went on and the months fell out\n[00:54]Of my way, what can I sing about it\n[00:57]You swore you'd always be around\n[01:00]If I stay, so I'm staying\n[01:03]I hold my plans to the god of fate\n[01:05]And all he say was boom, boom, boom\n[01:08]You're the point to the love I found\n[01:11]In a way, don't think I'm crazy\n[01:14]What is a girl like me to do-u-u\n[01:17]Not for a second I can leave you-u-u\n[01:21]Been here a month and I know your smile-u-u\n[01:24]My heart is thinking I'll stay a while-u-u-u-u, whoa\n[01:30]O-e-o, o-e-o, o-e-o-o-o-o\n[01:36]O-e-o, o-e-o, o-e-o-o-o-o\n[01:41]O-e-o, o-e-o, o-e-o-o-o-o\n[01:47]O-e-o, o-e-o, o-e-o-o-o-o\n[01:52]Got my camera, got my six\n[01:55]Anymore I'm leaving him\n[01:58]Run from life as I know it\n[02:01]Cause you got me, got me, got me transfixed\n[02:04]Thought I'd travel far away\n[02:07]But you call me half the way\n[02:09]Down in moyo I would stay\n[02:12]Cause you got me, got me, got me good babe\n[02:15]What is a girl like me to do-u-u\n[02:19]Not for a second I can leave you-u-u\n[02:22]Been here a month and I know your smile-u-u\n[02:26]My heart is thinking I'll stay a while-u-u-u-u, whoa\n[02:42]I'll never let you go\n[02:45]Boy, you're my comfort child\n[02:48]I'll never let you go\n[02:50]No, no, ooh\n[02:53]I see our love's been on lock and there's no talk if I stop it\n[02:57]You just don't want to see me go\n[02:59]Every look I've been clocking, on your door I've been knocking\n[03:02]Get your life and baby let's go, go\n[03:05]I met this boy in Molly town\n[03:08]He said a boom, a boom, boom, boom\n[03:11]He said he'd like to buy my round\n[03:13]I said OK, a boom, boom, boom\n",
 		//歌词对象 存储对应时间对应margin、text、index
 		lrcObj:[],
@@ -69,6 +70,8 @@ const state={
 		lrcText:'',
 		//存储歌词偏移量
 		marginTop:'',
+		//成功获取歌词flag
+		suclrc:false,
 	}
 const getters={
 		//registration部分
@@ -119,6 +122,7 @@ const getters={
 		lrcObj:state=>state.lrcObj,
 		lrcStr:state=>state.lrcStr,
 		marginTop:state=>state.marginTop,
+		suclrc:state=>state.suclrc,
 	}
 const mutations={
 		//registration部分
@@ -316,12 +320,15 @@ const mutations={
 		//获取歌词详情，与getSong同时使用
 		getlrc(state,id){
 			const url='/api/lyric?id='+id;
+			state.suclrc=false;
 			axios.get(url).then((res)=>{
-				console.log(res);
 				state.lrc=res.data.lrc.lyric;
-			}).catch(erro=>{console.log(erro)})
+				state.suclrc=true;
+				console.log(1);
+			}).catch(erro=>{console.log("获取歌词出错"+erro)})
+			console.log(3)
 		},
-		//处理歌词,
+		//处理歌词,与getSong同时使用
 		initlrc(state){
 			//处理歌词 时间匹配只能是整数，否则会有问题
 			const Reg=/\[(\d+):(\d+.*\d*)\]/;
@@ -331,12 +338,14 @@ const mutations={
 			state.lrcObj={};
 			state.lrcStr='';
 			state.marginTop=0;
+			state.lrcText='';
 
 			state.lrcObj['T'+0]={
 				index:0,
 				text:'歌词 '+lrcArr[0].slice(1,lrcArr[0].length-1),
 				top:0,
 			}
+			console.log(2);
 			state.lrcStr+='<li>歌词 '+lrcArr[0].slice(1,lrcArr[0].length-1)+'</li>';
 			for(let i=1,len=lrcArr.length-1;i<len;i++){
 				let everylrc=lrcArr[i].split(']');
@@ -350,7 +359,6 @@ const mutations={
 				}
 				state.lrcStr+='<li>'+text+'</li>';
 			}
-			console.log(state.lrcObj)
 		},
 	}
 const actions={
@@ -381,8 +389,7 @@ const actions={
 		},
 		getSong({commit},payload){
 			commit('getSong',payload);
-			// commit('getlrc',payload);
-			commit('initlrc');
+			commit('getlrc',payload);
 		},
 		setDuration({commit}){
 			commit('setDuration');

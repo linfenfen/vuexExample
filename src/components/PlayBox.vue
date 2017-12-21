@@ -36,7 +36,12 @@
 				this.$store.commit('pause');
 			},
 			audioEnd(flag){
-				this.$store.dispatch('audioEnd',flag);
+				if(this.showFlag){
+					this.$store.commit('audioEnd',flag);
+					this.$router.push({name:'play',params:{id:this.$store.getters.musicId}})
+				}else{
+					this.$store.dispatch('audioEnd',flag);
+				}
 			},
 			setDuration(){
 				this.$store.dispatch('setDuration'),
@@ -45,9 +50,10 @@
 			changlrc(){
 				const lrcObj=this.$store.getters.lrcObj;
 				const audio=document.querySelector('#playerBar');
-				//1是调节的变量， 可用于控制  歌词加快或者减慢
-				const curTime=Math.round(audio.currentTime)-1;
+				//0.5是调节的变量， 可用于控制  歌词加快或者减慢
+				const curTime=Math.round(audio.currentTime-0.5);
 				if(lrcObj['T'+curTime]&&lrcObj['T'+curTime].text!=this.$store.getters.lrcText){
+					this.$store.state.lrcText=lrcObj['T'+curTime].text;
 					this.$store.state.marginTop=lrcObj['T'+curTime].top;
 				}
 			}

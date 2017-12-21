@@ -53,7 +53,7 @@ let audioPlay;
 				return this.$store.getters.lrcStr;
 			},
 			showlrc(){
-				return this.$route.params.id == 32719128
+				return this.$route.params.id == 31745165
 			},
 			marginTop(){
 				return this.$store.getters.marginTop;
@@ -61,23 +61,22 @@ let audioPlay;
 		},
 		mounted(){
 			this.$nextTick(function(){
+				//当一曲完结musicEndFlag:true,切换歌曲changMusicFlag：false时 重新获得歌曲
+				if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag){
+					this.$store.dispatch('getSong',this.$route.params.id)
+				}
+
+
 				//重新进入页面时定位当前句的歌词
 				const lrc=document.querySelector('#lrc');
-/*
-	明天测试，是否不再出现快速滚动现象
-*/
 				if(this.None&&this.showlrc){
 					lrc.style.opacity=0;
 					// lrc.style.marginTop=-this.marginTop+'px';
 					//注意 这里是“translateY(-” + 变量 + “px）” 组成的字符串
 					lrc.style.transform="translateY(-"+this.marginTop+"px)";
 					lrc.style.WebkitTansform="translateY(-"+this.marginTop+"px)";
-					lrc.style.opacity=1;
+					setTimeout(()=>{lrc.style.opacity=1;},785)
 
-				}
-				//当一曲完结musicEndFlag:true,切换歌曲changMusicFlag：false时 重新获得歌曲
-				if(this.$store.getters.changeMusicFlag&&!this.$store.getters.musicEndFlag){
-					this.$store.dispatch('getSong',this.$route.params.id)
 				}
 			})
 		},
@@ -104,13 +103,16 @@ let audioPlay;
 		watch: {
 	    	'$route' (to, from) {
 	      		this.$store.commit('getSong',this.$route.params.id);
+	      		
 	    	},
 	    	marginTop(){
 	    		const lrc=document.querySelector('#lrc');
-	    		// lrc.style.marginTop=-this.marginTop+'px';
-	    		//注意 这里是“translateY(-” + 变量 + “px）” 组成的字符串
-	    		lrc.style.transform="translateY(-"+this.marginTop+"px)";
-	    		lrc.style.WebkitTansform="translateY(-"+this.marginTop+"px)";
+	    		if(this.None&&this.showlrc){
+		    		// lrc.style.marginTop=-this.marginTop+'px';
+		    		//注意 这里是“translateY(-” + 变量 + “px）” 组成的字符串
+		    		lrc.style.transform="translateY(-"+this.marginTop+"px)";
+		    		lrc.style.WebkitTansform="translateY(-"+this.marginTop+"px)";
+		    	}
 	    	}
   		},
 	}
@@ -161,7 +163,7 @@ let audioPlay;
 	}
 	#lrc{
 		/*transition:margin .5s*/
-		transition:transform .5s;
+		transition:transform .8s ease-in-out;
 		margin-top:0;
 	}
 
